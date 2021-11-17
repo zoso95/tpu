@@ -411,12 +411,12 @@ def override_params_dict(params, dict_or_string_or_yaml_file, is_strict):
           nested_csv_str_to_json_str(dict_or_string_or_yaml_file))
     except ValueError:
       pass
-    params_dict = yaml.load(dict_or_string_or_yaml_file)
+    params_dict = yaml.safe_load(dict_or_string_or_yaml_file)
     if isinstance(params_dict, dict):
       params.override(params_dict, is_strict)
     else:
       with tf.gfile.Open(dict_or_string_or_yaml_file) as f:
-        params.override(yaml.load(f), is_strict)
+        params.override(yaml.safe_load(f), is_strict)
   else:
     raise ValueError('Unknown input type to parse.')
   return params

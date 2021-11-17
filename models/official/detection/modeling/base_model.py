@@ -168,7 +168,10 @@ class BaseModel(six.with_metaclass(abc.ABCMeta, object)):
     # Platform device.
     self._use_tpu = params.use_tpu
 
-    self._skip_eval_loss = params.eval.skip_eval_loss
+    try:
+        self._skip_eval_loss = params.eval.skip_eval_loss
+    except KeyError as e:
+        self._skip_eval_loss = False
 
   @abc.abstractmethod
   def _build_outputs(self, images, labels, mode):
